@@ -1,14 +1,14 @@
-// Processing 4.3 Version
+// Processing 4.4.10 Version
 // An example class to show how to use the Line-us API
 
-class LineUsClient {
+class LineUsConnection {
 
   Client lineUs;
   boolean connected = false;
   String helloMessage;
   String address = "192.168.0.4";
 
-  LineUsClient(PApplet papp, String address) {
+  LineUsConnection(PApplet papp, String address) {
     this.address = address;
     try {
       lineUs = new Client(papp, address, 1337);

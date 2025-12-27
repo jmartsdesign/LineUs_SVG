@@ -1,15 +1,12 @@
-// Processing 4.3 Version
-// v0.3
+// Processing 4.4.10 Version
+// v0.4
 // Creative Commons
 // Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 // https://creativecommons.org/licenses/by-sa/4.0/
 // Original by Michael Zoellner, 2018
-// Updated for Processing 4.3, 2024
-// Current branch by Igor Molochevski, 2024
+// Updated for Processing 4.4.10, 2025
+// Current branch by JMArtdesigner, 2025
 // With the help of Copilot, I rewrote the entire codebase using a functional programming paradigm
-// Things to-do
-// - Add Error checking if host not found
-// - Redo segmentation to only segment non linear pathes
 
 import geomerative.*;
 import processing.net.*;
@@ -116,7 +113,9 @@ void drawInterface() {
 // Plot the SVG onto the Line-Us drawing area
 void plot() {
   println("plotting..."); // Print plotting status
-  myLineUs = new LineUsClient(this, lineus_address); // Initialize Line-Us instance
+  LineUsConnection myLineUs;
+myLineUs = new LineUsConnection(this, lineus_address);
+ // Initialize Line-Us instance
 
   if (!rawpoints) {
     RG.setPolygonizerLength(resolution); // Set polygonizer resolution if not raw points
@@ -190,7 +189,9 @@ void keyPressed() {
 // Attempt to connect to the Line-Us device
 void tryConnectLineUs() {
   try {
-    myLineUs = new LineUsClient(this, lineus_address); // Initialize Line-Us instance
+    LineUsConnection myLineUs;
+myLineUs = new LineUsConnection(this, lineus_address);
+ // Initialize Line-Us instance
     connected = true;
   } 
   catch (Exception e) {
@@ -231,24 +232,5 @@ interface Consumer<T> {
 }
 
 /*
-           /\
-          /  \
-         /    \
-        /______\
-       |        |
-       |  (o) (o)
-       |    ||  
-       |  \====/
-       |    --
-      /|       \
-     / |       |
-    /__|_______|
-  /    |       |
- /     |       |
-       |       |
-      /         \
-     /           \
-    /             \
-
-That's all folks!
+@JMArtsDesigner
 */
