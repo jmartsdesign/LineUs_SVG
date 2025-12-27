@@ -17,3 +17,8 @@ _Application interface / keys / shortcuts:_
 * connect Line-Us: c
 * plot drawing: p
 * hide menu: h
+
+## Helpful references:
+* https://github.com/Line-us/Line-us-Programming/blob/master/Documentation/LineUsDrawingArea.pdf
+* https://github.com/Line-us/Line-us-Programming
+* https://github.com/Line-us/Line-us-Programming/blob/master/Documentation/GCodeSpec.md
