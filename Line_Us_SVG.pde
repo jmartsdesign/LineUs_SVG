@@ -25,7 +25,7 @@ float resolution = 5; // Resolution for polygonizer
 
 String lineus_address = "line-us.local"; // Default address for Line-Us device
 
-LineUs myLineUs; // Line-Us device instance
+LineUsClient myLineUs; // Line-Us device instance
 
 // Constants defining the drawing area boundaries
 final int LINE_MIN_X = 650;
@@ -116,10 +116,12 @@ void drawInterface() {
 // Plot the SVG onto the Line-Us drawing area
 void plot() {
   println("plotting..."); // Print plotting status
-  myLineUs = new LineUs(this, lineus_address); // Initialize Line-Us instance
+  myLineUs = new LineUsClient(this, lineus_address); // Initialize Line-Us instance
+
   if (!rawpoints) {
     RG.setPolygonizerLength(resolution); // Set polygonizer resolution if not raw points
   }
+
   RPoint[][] points = grp.getPointsInPaths(); // Get points from paths in the shape
   delay(1000); // Delay for setup
 
@@ -131,23 +133,21 @@ void plot() {
   if (points != null) {
     for (RPoint[] pointArray : points) {
       for (RPoint point : pointArray) {
-        x = int(map(point.x, 0, width, 650, 1775)); // Map x coordinate to drawing area
-        y = int(map(point.y, 0, height, 1000, -1000)); // Map y coordinate to drawing area
+        x = int(map(point.x, 0, width, 650, 1775)); // Map x coordinate
+        y = int(map(point.y, 0, height, 1000, -1000)); // Map y coordinate
 
-        // Ensure point is within drawing area boundaries
         if (x >= LINE_MIN_X && x <= LINE_MAX_X && y >= LINE_MIN_Y && y <= LINE_MAX_Y) {
-          myLineUs.g01(x, y, 0); // Send point to Line-Us device
-          last_x = x; // Update last x position
-          last_y = y; // Update last y position
-          delay(100); // Delay between commands
+          myLineUs.g01(x, y, 0);
+          last_x = x;
+          last_y = y;
+          delay(100);
         }
       }
       myLineUs.g01(last_x, last_y, 1000); // Move pen up
-      delay(100); // Delay before next path
+      delay(100);
     }
   }
 }
-
 // Handle key press events for various functionalities
 void keyPressed() {
   switch (key) {
@@ -190,11 +190,12 @@ void keyPressed() {
 // Attempt to connect to the Line-Us device
 void tryConnectLineUs() {
   try {
-    myLineUs = new LineUs(this, lineus_address); // Initialize Line-Us instance
-    connected = true; // Set connection flag to true
-  } catch (Exception e) {
-    connected = false; // Set connection flag to false
-    println("connection error"); // Print connection error message
+    myLineUs = new LineUsClient(this, lineus_address); // Initialize Line-Us instance
+    connected = true;
+  } 
+  catch (Exception e) {
+    connected = false;
+    println("connection error");
   }
 }
 
@@ -251,4 +252,3 @@ interface Consumer<T> {
 
 That's all folks!
 */
-
